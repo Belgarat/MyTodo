@@ -1,27 +1,86 @@
 # MyTodo
+This is my project to test and deep learn angular components and technology.\
+The purpose of this work is to create a skeleton for applications to decrease the time projects startups.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+[Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
 
-## Development server
+## PrimeNG
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Installation
+`npm install primeng --save` \
+`npm install primeicons --save`\
 
-## Code scaffolding
+For 'OrderListModule' install cdk library:
+`npm install @angular/cdk --save`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Add following line to angular.json:
+```
+[...]
+  "styles": [
+    "node_modules/primeng/resources/themes/saga-blue/theme.css",
+    "node_modules/primeng/resources/primeng.min.css",
+    "node_modules/primeicons/primeicons.css",
+    "src/styles.scss"
+  ],
+[...]
+```
+Because PrimeNG can work correctly is important to add "SharedModule" in app.module.ts:
+```
+imports: [
+      [...]
+      MenubarModule,
+      SharedModule,
+      [...]
+```
+MenubarModule is a specific module for the use MenuBar component.
 
-## Build
+#### PrimeFlex
+`npm install primeflex --save`\
+Then change angular.json file add in styles array:
+```angular2html
+    "src/styles.scss",
+    "./node_modules/primeflex/primeflex.css"
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## NGRX 
 
-## Running unit tests
+### Install NGRX dependencies
+`npm install @ngrx/{effects,entity,router-store,store,store-devtools} --save`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Init directory architecture
+Create this folders in core directory (root state):
+- actions
+- effects
+- reducers
+- models
 
-## Running end-to-end tests
+For simplify use of store, create index.ts file on the root of state folder.
+Every lazy module will have the same structure.\
+Important declare in the single lazy module the store with this syntax:
+```
+StoreModule.forFeature('featuresTodos', reducers),
+```
+The property 'forFeatures' tells Angular that this is a store in a lazy module and can only be load with this module.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Code documentation
+For the documentation I use typescript standard:
+```angular2html
+  /**
+  * Creates an instance of documenter.
+  */
+  constructor()
 
-## Further help
+  /**
+  * // TODO: comment dispose
+  * Disposes documenter
+  */
+  dispose() 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  /**
+  * // TODO: comment getScriptVersion
+  * Gets script version
+  * @param fileName
+  * @returns script version
+  */
+  getScriptVersion(fileName: string): string 
+```
