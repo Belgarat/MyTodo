@@ -12,11 +12,17 @@ import {FormsModule} from "@angular/forms";
 import {CardModule} from "primeng/card";
 import {DividerModule} from "primeng/divider";
 import {CustomModule} from "../../shared/custom.module";
+import { LegendComponent } from './legend/legend.component';
+import { TodoItemComponent } from './todo-item/todo-item.component';
+import {ToolbarModule} from "primeng/toolbar";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
   declarations: [
-    TodosComponent
+    TodosComponent,
+    LegendComponent,
+    TodoItemComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +35,8 @@ import {CustomModule} from "../../shared/custom.module";
     CardModule,
     DividerModule,
     CustomModule,
+    ToolbarModule,
+    ButtonModule,
   ]
 })
 export class TodosModule { }

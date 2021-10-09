@@ -1,0 +1,14 @@
+@import "src/app/scss/vars";
+.p-toolbar {
+  &.p-toolbar-group-right > .p-element {
+    padding-right: 0.5em;
+  }
+}
+:host ::ng-deep .bg-panel, :host ::ng-deep .bg-panel > .p-toolbar {
+  background-color: $surfaceF !important;
+  border-width: 0px;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-top: 0.3em;
+  margin-right: 1.2em;
+}

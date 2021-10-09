@@ -3,3 +3,7 @@ export interface TodoModel {
   todo: string;
   checked: boolean;
 }
+export interface TodoEmitModel {
+  element: TodoModel;
+  event: MouseEvent|TouchEvent;
+}

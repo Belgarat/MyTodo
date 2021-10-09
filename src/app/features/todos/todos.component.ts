@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TodoModel} from "./state/models";
+import {TodoEmitModel} from "./state/models/todo.model";
 
 @Component({
   selector: 'mbr-todos',
@@ -7,54 +8,44 @@ import {TodoModel} from "./state/models";
     <div class="content-section implementation">
       <p-card>
         <p-orderList
+          controlsPosition="right"
           [value]="todos"
           [listStyle]="{'max-height':'30rem'}"
           [(selection)]="selectedTodos"
-          header="List of todos"
+          header="Todo list"
           filterBy="todo"
           filterPlaceholder="Filter by todo description"
-          [dragdrop]="true"
+          [dragdrop]="false"
         >
           <ng-template let-todo pTemplate="item">
-            <div class="todo-item flex justify-content-between">
-              <div class="todo-list-detail">
-                <i class="pi pi-briefcase todo-icon"></i>
-                <span class="todo-category">{{todo.todo}}</span>
-              </div>
-              <div class="todo-list-action">
-                <i [title]="todo.checked ? 'Task complete' : 'Task to do'" class="pi" [ngClass]="{'pi-check-circle': todo.checked, 'pi-circle-off': !todo.checked}"></i>
-              </div>
-            </div>
+            <mbr-todo-item [todo]="todo" (comlete)="setComplete($event)"></mbr-todo-item>
           </ng-template>
         </p-orderList>
+        <ng-template pTemplate="content">
+          <p-toolbar *ngIf="selectedTodos.length > 0" styleClass="bg-panel">
+            <div class="p-toolbar p-toolbar-group-left"></div>
+            <div class="p-toolbar p-toolbar-group-right">
+              <div class="p-text-secondary mr-2">Azioni</div>
+              <p-button *ngIf="selectedTodos.length === 1" icon="pi pi-pencil" styleClass="p-button-success"></p-button>
+              <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+            </div>
+          </p-toolbar>
+        </ng-template>
         <ng-template pTemplate="footer">
-          <i class="pi pi-check-circle"></i>: Task complete
-            |
-          <i class="pi pi-circle-off"></i>: Task to do
+          <mbr-legend></mbr-legend>
         </ng-template>
       </p-card>
       <mbr-debug-info *isProduction [debugItem]="selectedTodos"></mbr-debug-info>
     </div>
   `,
-  styles: [`
-    .todo-item
-        .todo-list-detail
-            .todo-icon {
-                color: green;
-                font-size: 1.2em;
-            }
-
-        .todo-category {
-            margin-left: 0.5em;
-        }
-  `]
+  styleUrls: ['todos.component.scss']
 })
 export class TodosComponent implements OnInit {
   todos: TodoModel[] = [
     {id:1, todo: 'test1', checked: false},
-    {id:1, todo: 'second', checked: false},
-    {id:1, todo: 'proviamo a vedere', checked: true},
-    {id:1, todo: 'Così he succede?', checked: false},
+    {id:2, todo: 'second', checked: false},
+    {id:3, todo: 'proviamo a vedere', checked: true},
+    {id:4, todo: 'Così he succede?', checked: false},
   ]
   selectedTodos: TodoModel[] = [];
 
@@ -63,4 +54,13 @@ export class TodosComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setComplete(todo: TodoEmitModel): void {
+    todo.event.stopPropagation();
+    this.todos.map(el => {
+      if (el.id === todo.element.id) {
+        el.checked = !el.checked
+      }
+      return el;
+    });
+  }
 }

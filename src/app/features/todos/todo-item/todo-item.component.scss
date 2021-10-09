@@ -1,0 +1,16 @@
+@import '~src/app/scss/mixin';
+@import "src/app/scss/vars";
+.todo-item {
+  .todo-list-detail {
+    .todo-icon-todo {
+      @include iconTodoList($primaryTextColor);
+    }
+    .todo-icon-complete {
+      @include iconTodoList($secondaryTextColor);
+    }
+
+  }
+  .todo-category {
+    margin-left: 0.5em;
+  }
+}
